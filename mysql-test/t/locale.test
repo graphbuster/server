@@ -165,7 +165,12 @@ select date_format('2001-12-01', '%c %b %M', 'rm_CH');
 select date_format('2001-01-06', '%w %a %W', 'de_CH');
 select date_format('2001-09-01', '%c %b %M', 'de_CH');
 
-create view v1 as select date_format('2001-10-02', '%c %b %M', 'ru_RU');
+# Item::print
+create view v1 as select
+        date_format('2001-10-02', '%c %b %M') as a,
+        date_format('2001-10-02', '%c %b %M', 'ru_RU') as b,
+        format(123456789,2) as c,
+        format(123456789,2,'rm_CH') as d;
 select * from v1;
 show create view v1;
 drop view v1;

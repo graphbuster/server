@@ -288,3 +288,15 @@ date_format('2001-01-06', '%w %a %W', 'de_CH')
 select date_format('2001-09-01', '%c %b %M', 'de_CH');
 date_format('2001-09-01', '%c %b %M', 'de_CH')
 9 Sep September
+create view v1 as select
+date_format('2001-10-02', '%c %b %M') as a,
+date_format('2001-10-02', '%c %b %M', 'ru_RU') as b,
+format(123456789,2) as c,
+format(123456789,2,'rm_CH') as d;
+select * from v1;
+a	b	c	d
+10 Oct October	10 Окт Октября	123,456,789.00	123'456'789,00
+show create view v1;
+View	Create View	character_set_client	collation_connection
+v1	CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v1` AS select date_format('2001-10-02','%c %b %M') AS `a`,date_format('2001-10-02','%c %b %M','ru_RU') AS `b`,format(123456789,2) AS `c`,format(123456789,2,'rm_CH') AS `d`	utf8	utf8_general_ci
+drop view v1;
