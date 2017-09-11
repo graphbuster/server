@@ -135,8 +135,6 @@ struct fil_space_crypt_t : st_encryption_scheme
 			type = CRYPT_SCHEME_1;
 			min_key_version = key_get_latest_version();
 		}
-
-		key_found = min_key_version;
 	}
 
 	/** Destructor */
