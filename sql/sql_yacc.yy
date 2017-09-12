@@ -1163,6 +1163,7 @@ bool my_yyoverflow(short **a, YYSTYPE **b, ulong *yystacksize);
 %token  DATA_SYM                      /* SQL-2003-N */
 %token  DATETIME
 %token  DATE_ADD_INTERVAL             /* MYSQL-FUNC */
+%token  DATE_FORMAT_SYM               /* MYSQL-FUNC */
 %token  DATE_SUB_INTERVAL             /* MYSQL-FUNC */
 %token  DATE_SYM                      /* SQL-2003-R */
 %token  DAY_HOUR_SYM
@@ -9721,6 +9722,18 @@ function_call_nonkeyword:
           %prec INTERVAL_SYM
           {
             $$= new (thd->mem_root) Item_date_add_interval(thd, $3, $6, $7, 1);
+            if ($$ == NULL)
+              MYSQL_YYABORT;
+          }
+        | DATE_FORMAT_SYM '(' expr ',' expr ')'
+          {
+            $$= new (thd->mem_root) Item_func_date_format(thd, $3, $5);
+            if ($$ == NULL)
+              MYSQL_YYABORT;
+          }
+        | DATE_FORMAT_SYM '(' expr ',' expr ',' expr ')'
+          {
+            $$= new (thd->mem_root) Item_func_date_format(thd, $3, $5, $7);
             if ($$ == NULL)
               MYSQL_YYABORT;
           }
